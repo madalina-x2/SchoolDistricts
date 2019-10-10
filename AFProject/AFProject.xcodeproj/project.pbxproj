@@ -14,6 +14,7 @@
 		C562B81E234CC3FE00C87EC6 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C562B81C234CC3FE00C87EC6 /* Main.storyboard */; };
 		C562B820234CC3FF00C87EC6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C562B81F234CC3FF00C87EC6 /* Assets.xcassets */; };
 		C562B823234CC3FF00C87EC6 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C562B821234CC3FF00C87EC6 /* LaunchScreen.storyboard */; };
+		C562B82E234E055100C87EC6 /* SchoolDistrict.swift in Sources */ = {isa = PBXBuildFile; fileRef = C562B82D234E055100C87EC6 /* SchoolDistrict.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +27,7 @@
 		C562B81F234CC3FF00C87EC6 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		C562B822234CC3FF00C87EC6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		C562B824234CC3FF00C87EC6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C562B82D234E055100C87EC6 /* SchoolDistrict.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SchoolDistrict.swift; sourceTree = "<group>"; };
 		C6D454381BA88B5D6309A526 /* Pods-AFProject.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AFProject.debug.xcconfig"; path = "Target Support Files/Pods-AFProject/Pods-AFProject.debug.xcconfig"; sourceTree = "<group>"; };
 		C9148696DCDF0428B146F499 /* Pods-AFProject.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AFProject.release.xcconfig"; path = "Target Support Files/Pods-AFProject/Pods-AFProject.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -80,7 +82,9 @@
 		C562B815234CC3FE00C87EC6 /* AFProject */ = {
 			isa = PBXGroup;
 			children = (
-				C562B81A234CC3FE00C87EC6 /* ViewController.swift */,
+				C562B82C234E050E00C87EC6 /* Models */,
+				C562B82F234E06C600C87EC6 /* Controllers */,
+				C562B830234E06D100C87EC6 /* Views */,
 				C562B81C234CC3FE00C87EC6 /* Main.storyboard */,
 				C562B824234CC3FF00C87EC6 /* Info.plist */,
 				C562B82A234CC41D00C87EC6 /* Supporting Files */,
@@ -97,6 +101,29 @@
 				C562B821234CC3FF00C87EC6 /* LaunchScreen.storyboard */,
 			);
 			path = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		C562B82C234E050E00C87EC6 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				C562B82D234E055100C87EC6 /* SchoolDistrict.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		C562B82F234E06C600C87EC6 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				C562B81A234CC3FE00C87EC6 /* ViewController.swift */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		C562B830234E06D100C87EC6 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -215,6 +242,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C562B81B234CC3FE00C87EC6 /* ViewController.swift in Sources */,
+				C562B82E234E055100C87EC6 /* SchoolDistrict.swift in Sources */,
 				C562B817234CC3FE00C87EC6 /* AppDelegate.swift in Sources */,
 				C562B819234CC3FE00C87EC6 /* SceneDelegate.swift in Sources */,
 			);
