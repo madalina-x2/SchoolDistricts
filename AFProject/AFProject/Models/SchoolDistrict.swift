@@ -14,15 +14,16 @@ struct SchoolDistrict {
     
     var district: String
     var state: String
-    var logoURL: String
-    var logoURLThumbnail: String
+    var logoURLThumbnail: URL
+    var blueBackground: Bool
     
     // MARK: - Initializers
     
     init(jsonData: [String: Any]) {
         self.district = jsonData["district"] as? String ?? "NA"
         self.state = jsonData["state"] as? String ?? "NA"
-        self.logoURL = jsonData["logo_url"] as? String ?? "NA"
-        self.logoURLThumbnail = jsonData["logo_url_thumbnail"] as? String ?? "NA"
+        self.logoURLThumbnail = URL(string: jsonData["logo_url_thumbnail"] as? String ?? "NA")!
+        self.blueBackground = jsonData["background"] as? Bool ?? false
     }
 }
+

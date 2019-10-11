@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  SchoolDistrictsDisplayCollectionViewController.swift
 //  AFProject
 //
 //  Created by Madalina Sinca on 08/10/2019.
@@ -9,7 +9,7 @@
 import UIKit
 import Alamofire
 
-class ViewController: UIViewController {
+class SchoolDistrictsDisplayCollectionViewController: UICollectionViewController {
     
     // MARK: - Properties
     
@@ -36,13 +36,10 @@ class ViewController: UIViewController {
                     print("error while fetching school districts: \(String(describing: response.result.error))")
                     return
                 }
-                print("\(String(describing: response.result.value))")
-                
                 guard let value = response.result.value as? [String: Any] else {
                     print("malformed JSON")
                     return
                 }
-                
                 self.schoolDistricts = Array(value.mapValues { return SchoolDistrict(jsonData: $0 as! [String: Any]) }.values) // ios_enabled == true filter?
         }
     }
