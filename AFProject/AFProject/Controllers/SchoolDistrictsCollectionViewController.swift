@@ -17,16 +17,16 @@ class SchoolDistrictsCollectionViewController: UIViewController {
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var containerView: UIView!
     @IBOutlet weak var searchIconImage: UIImageView!
-    @IBOutlet weak var searchBarField: UITextField!
+    @IBOutlet weak var searchBar: UITextField!
     
     // MARK: - Properties
     
+    var schoolDistrictFetcher = SchoolDistrictFetcher()
     var schoolDistricts: [SchoolDistrict]! {
         didSet {
             self.collectionView.reloadData()
         }
     }
-    var url = URL(string: "https://launchpad-169908.firebaseio.com/schools.json")
     private var itemWidth: CGFloat {
         if UIDevice.current.userInterfaceIdiom == .pad {
             return (view.bounds.width - 30) / 2
@@ -49,18 +49,30 @@ class SchoolDistrictsCollectionViewController: UIViewController {
         (collectionView.collectionViewLayout as? UICollectionViewFlowLayout)?.minimumInteritemSpacing = 10
     }
     
+    var jsonURL = URL(string: "https://launchpad-169908.firebaseio.com/schools.json") // temporary
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        fetchOrderedSchoolDistricts(url: url!)
+        //schoolDistricts = schoolDistrictFetcher.getOrderedSchoolDistricts()
+        fetchOrderedSchoolDistricts(from: jsonURL!)
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        searchBar.becomeFirstResponder()
     }
     
     override func viewDidLayoutSubviews() {
         collectionView.contentInset.top = containerView.frame.maxY + 10
     }
     
-    // MARK: - Class Methods
+    // MARK: - Auxiliary Methods
     
-    func fetchOrderedSchoolDistricts(url: URL) {
+    func setupContainerView() {
+        containerView.makeRoundedCorners(cornerRadius: 10)
+        searchIconImage.image = #imageLiteral(resourceName: "searchIcon")
+    }
+    
+    private func fetchOrderedSchoolDistricts(from url: URL) {
         Alamofire.request(url,
                           method: .get,
                           parameters: nil)
@@ -78,14 +90,8 @@ class SchoolDistrictsCollectionViewController: UIViewController {
                 self.schoolDistricts = Array(value.mapValues {
                     return SchoolDistrict(jsonData: $0 as! [String: Any])
                 }.values).sortAlphabetically(by: \.district)
+                print()
         }
-    }
-    
-    // MARK: - Auxiliary Methods
-    
-    func setupContainerView() {
-        containerView.makeRoundedCorners(cornerRadius: 10)
-        searchIconImage.image = #imageLiteral(resourceName: "searchIcon")
     }
 }
 

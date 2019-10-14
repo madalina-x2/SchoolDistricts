@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Kingfisher
 
 class SchoolDistrictCollectionViewCell: UICollectionViewCell {
     
@@ -16,21 +17,13 @@ class SchoolDistrictCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var schoolDistrictStateLabel: UILabel!
     @IBOutlet weak var schoolDistrictNameLabel: UILabel!
     @IBOutlet weak var imageContainerView: UIView!
-    
-    // MARK: - Properties
-    
-    var fetcher: ImageFetcher!
-    
+        
     // MARK: - Class Methods
     
     func populateWith(url: URL, stateLabel: String, districtLabel: String) {
-        fetcher = ImageFetcher(fetch: url) { (url, image) in
-            DispatchQueue.main.async {
-                self.schoolDistrictLogo.image = image
-                self.schoolDistrictNameLabel.text = districtLabel
-                self.schoolDistrictStateLabel.text = stateLabel
-            }
-        }
+        schoolDistrictNameLabel.text = districtLabel
+        schoolDistrictStateLabel.text = stateLabel
+        schoolDistrictLogo.kf.setImage(with: url)
     }
     
     func assignCellStyle(imageContainerColor: Bool = false) {

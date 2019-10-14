@@ -14,6 +14,7 @@
 		C562B820234CC3FF00C87EC6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C562B81F234CC3FF00C87EC6 /* Assets.xcassets */; };
 		C562B823234CC3FF00C87EC6 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C562B821234CC3FF00C87EC6 /* LaunchScreen.storyboard */; };
 		C562B82E234E055100C87EC6 /* SchoolDistrict.swift in Sources */ = {isa = PBXBuildFile; fileRef = C562B82D234E055100C87EC6 /* SchoolDistrict.swift */; };
+		C58C7C5C235481DF009AC3F7 /* SchoolDistrictFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = C58C7C5B235481DF009AC3F7 /* SchoolDistrictFetcher.swift */; };
 		C5ED034E234F3E52004F8523 /* SchoolDistrictsCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5ED034D234F3E52004F8523 /* SchoolDistrictsCollectionViewController.swift */; };
 		C5ED0350234F48C8004F8523 /* SchoolDistrictCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5ED034F234F48C8004F8523 /* SchoolDistrictCollectionViewCell.swift */; };
 		C5ED0352234F6FF2004F8523 /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5ED0351234F6FF2004F8523 /* Utilities.swift */; };
@@ -30,6 +31,7 @@
 		C562B822234CC3FF00C87EC6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		C562B824234CC3FF00C87EC6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C562B82D234E055100C87EC6 /* SchoolDistrict.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SchoolDistrict.swift; sourceTree = "<group>"; };
+		C58C7C5B235481DF009AC3F7 /* SchoolDistrictFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SchoolDistrictFetcher.swift; sourceTree = "<group>"; };
 		C5ED034D234F3E52004F8523 /* SchoolDistrictsCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SchoolDistrictsCollectionViewController.swift; sourceTree = "<group>"; };
 		C5ED034F234F48C8004F8523 /* SchoolDistrictCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SchoolDistrictCollectionViewCell.swift; sourceTree = "<group>"; };
 		C5ED0351234F6FF2004F8523 /* Utilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
@@ -114,6 +116,7 @@
 			isa = PBXGroup;
 			children = (
 				C562B82D234E055100C87EC6 /* SchoolDistrict.swift */,
+				C58C7C5B235481DF009AC3F7 /* SchoolDistrictFetcher.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -263,6 +266,7 @@
 				C562B82E234E055100C87EC6 /* SchoolDistrict.swift in Sources */,
 				C562B817234CC3FE00C87EC6 /* AppDelegate.swift in Sources */,
 				C5ED03552350A62F004F8523 /* UIViewExtension.swift in Sources */,
+				C58C7C5C235481DF009AC3F7 /* SchoolDistrictFetcher.swift in Sources */,
 				C5ED0350234F48C8004F8523 /* SchoolDistrictCollectionViewCell.swift in Sources */,
 				C562B819234CC3FE00C87EC6 /* SceneDelegate.swift in Sources */,
 			);
