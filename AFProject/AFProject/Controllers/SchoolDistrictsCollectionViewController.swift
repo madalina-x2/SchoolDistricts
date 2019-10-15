@@ -15,14 +15,26 @@ private let reuseIdentifier = "schoolDistrictCell"
 class SchoolDistrictsCollectionViewController: UIViewController {
 
     @IBOutlet weak var collectionView: UICollectionView!
-    @IBOutlet weak var containerView: UIView!
+    @IBOutlet weak var backgroundImageView: UIImageView!
     @IBOutlet weak var searchIconImage: UIImageView!
-    @IBOutlet weak var searchBar: UITextField!
+    @IBOutlet weak var containerView: UIView!
+    @IBOutlet weak var searchBar: UITextField! {
+        didSet {
+            searchBar.addTarget(self,
+                                action: #selector(queryDidChange(_:)),
+                                for: .editingChanged)
+        }
+    }
     
     // MARK: - Properties
     
     var schoolDistrictFetcher = SchoolDistrictFetcher()
-    var schoolDistricts: [SchoolDistrict]! {
+    var allSchoolDistricts: [SchoolDistrict]? {
+        didSet {
+            filteredSchoolDistricts = allSchoolDistricts
+        }
+    }
+    var filteredSchoolDistricts: [SchoolDistrict]? {
         didSet {
             self.collectionView.reloadData()
         }
@@ -49,11 +61,15 @@ class SchoolDistrictsCollectionViewController: UIViewController {
         (collectionView.collectionViewLayout as? UICollectionViewFlowLayout)?.minimumInteritemSpacing = 10
     }
     
-    var jsonURL = URL(string: "https://launchpad-169908.firebaseio.com/schools.json") // temporary
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        //schoolDistricts = schoolDistrictFetcher.getOrderedSchoolDistricts()
-        fetchOrderedSchoolDistricts(from: jsonURL!)
+        schoolDistrictFetcher.getOrderedSchoolDistrictsWith { (result) in
+            if case let (.failure(error)) =  result {
+                print(error)
+                return
+            }
+            self.allSchoolDistricts = try? result.get()
+        }
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -71,27 +87,20 @@ class SchoolDistrictsCollectionViewController: UIViewController {
         containerView.makeRoundedCorners(cornerRadius: 10)
         searchIconImage.image = #imageLiteral(resourceName: "searchIcon")
     }
+        
+    @objc func queryDidChange(_ sender: UITextField) {
+        filteredSchoolDistricts = filterSchoolDistricts(by: sender.text!)
+        print("")
+    }
     
-    private func fetchOrderedSchoolDistricts(from url: URL) {
-        Alamofire.request(url,
-                          method: .get,
-                          parameters: nil)
-            .validate()
-            .responseJSON { response in
-                guard response.result.isSuccess else {
-                    print("error while fetching school districts: \(String(describing: response.result.error))")
-                    return
-                }
-                guard let value = response.result.value as? [String: Any] else {
-                    print("malformed JSON")
-                    return
-                }
-                
-                self.schoolDistricts = Array(value.mapValues {
-                    return SchoolDistrict(jsonData: $0 as! [String: Any])
-                }.values).sortAlphabetically(by: \.district)
-                print()
+    private func filterSchoolDistricts(by query: String) -> [SchoolDistrict] {
+        if query == "" {
+            return allSchoolDistricts!
         }
+        var results = [SchoolDistrict]()
+        
+        results = allSchoolDistricts!.filter{ $0.district.lowercased().contains(query.lowercased())}
+        return results
     }
 }
 
@@ -99,15 +108,14 @@ class SchoolDistrictsCollectionViewController: UIViewController {
 
 extension SchoolDistrictsCollectionViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return schoolDistricts?.count ?? 0
+        return filteredSchoolDistricts?.count ?? 0
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as? SchoolDistrictCollectionViewCell else {
             fatalError("Could not get cell.")
         }
-
-        guard let schoolDistrict = schoolDistricts?[indexPath.item] else {
+        guard let schoolDistrict = filteredSchoolDistricts?[indexPath.item] else {
             return cell
         }
         let thumbnailURL = schoolDistrict.logoURLThumbnail

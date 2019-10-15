@@ -9,39 +9,43 @@
 import Foundation
 import Alamofire
 
+struct FetchError: Error {
+    let message: String
+    var localizedDescription: String {
+        return message
+    }
+}
+
 class SchoolDistrictFetcher {
-    
-    var schoolDistricts: [SchoolDistrict] = []
     var jsonURL = URL(string: "https://launchpad-169908.firebaseio.com/schools.json")
     let group = DispatchGroup()
     
     // MARK: - Class Methods
     
-    func getOrderedSchoolDistricts() -> [SchoolDistrict] {
-        getJsonObjects(from: jsonURL!)
-        
-        return schoolDistricts.sortAlphabetically(by: \.district)
+    func getOrderedSchoolDistrictsWith(completion: @escaping (Swift.Result<[SchoolDistrict], Error>) -> ()) {
+        getJsonObjects(from: jsonURL!, completion: completion)
     }
     
-    private func getJsonObjects(from url: URL) {
+    private func getJsonObjects(from url: URL, completion: @escaping (Swift.Result<[SchoolDistrict], Error>) -> ()) {
         Alamofire.request(url,
                           method: .get,
                           parameters: nil)
             .validate()
             .responseJSON { response in
                 guard response.result.isSuccess else {
-                    print("error while fetching school districts: \(String(describing: response.result.error))")
+                    completion(.failure(response.result.error!))
                     return
                 }
                 guard let value = response.result.value as? [String: Any] else {
-                    print("malformed JSON")
+                    completion(.failure(FetchError(message: "Malformed json")))
                     return
                 }
                 
-                self.schoolDistricts = Array(value.mapValues {
+                let schoolDistricts = Array(value.mapValues {
                     return SchoolDistrict(jsonData: $0 as! [String: Any])
-                }.values)
-                print()
+                }.values).filter{ $0.district.contains("#") == false}
+                
+                completion(.success(schoolDistricts.sortAlphabetically(by: \.district)))
         }
     }
 }
