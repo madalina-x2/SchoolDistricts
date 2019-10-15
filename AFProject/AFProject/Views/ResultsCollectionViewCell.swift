@@ -10,9 +10,13 @@ import UIKit
 
 class ResultsCollectionViewCell: UICollectionReusableView {
     
+    // MARK: - Outlets
+    
     @IBOutlet weak var resultsLabel: UILabel!
     
-    func initializeCell(with color: CGColor, text: String) {
+   // MARK: - Initializers
+    
+    func initializeCell(with text: String) {
         resultsLabel.text = text
     }
 }

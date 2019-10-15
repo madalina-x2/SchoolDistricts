@@ -9,24 +9,21 @@
 import Foundation
 import Alamofire
 
-struct FetchError: Error {
-    let message: String
-    var localizedDescription: String {
-        return message
-    }
-}
-
 class SchoolDistrictFetcher {
-    var jsonURL = URL(string: "https://launchpad-169908.firebaseio.com/schools.json")
-    let group = DispatchGroup()
     
-    // MARK: - Class Methods
+    // MARK: - Private Properties
+    
+    private let jsonURL = URL(string: "https://launchpad-169908.firebaseio.com/schools.json")
+    
+    // MARK: - Fetcher
     
     func getOrderedSchoolDistrictsWith(completion: @escaping (Swift.Result<[SchoolDistrict], Error>) -> ()) {
-        getJsonObjects(from: jsonURL!, completion: completion)
+        getAlphabeticallyOrderedJsonObjects(from: jsonURL!, completion: completion)
     }
     
-    private func getJsonObjects(from url: URL, completion: @escaping (Swift.Result<[SchoolDistrict], Error>) -> ()) {
+    // MARK: - Network Handling
+    
+    private func getAlphabeticallyOrderedJsonObjects(from url: URL, completion: @escaping (Swift.Result<[SchoolDistrict], Error>) -> ()) {
         Alamofire.request(url,
                           method: .get,
                           parameters: nil)
@@ -50,3 +47,13 @@ class SchoolDistrictFetcher {
     }
 }
 
+// MARK: - Extensions
+
+extension SchoolDistrictFetcher {
+    struct FetchError: Error {
+        let message: String
+        var localizedDescription: String {
+            return message
+        }
+    }
+}
